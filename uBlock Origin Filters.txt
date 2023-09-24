@@ -1,0 +1,150 @@
+! https://github.com/mchangrh/yt-neuter/tree/main/docs#excluding-filter
+! ubo way is to replace ## with #@# and || with @@
+
+! blab updates it. To take advantage of the updates I include the whole list in my uBO, but also add some negations via My Filters.
+! IIRC you can copy a filter from the big list into My Filters and and just prepend a ~ to that line to do that
+
+! YouTube Start
+
+! Exclusions from filter
+
+!!! global
+!! header
+! create button
+~youtube.com##ytd-topbar-menu-button-renderer:has(button[aria-label=Create])
+! block image/animations from being fetched (falls back to normal logo)
+~www.gstatic.com/youtube/img/promos/*$image
+! block child elements of yoodle
+~youtube.com##.ytd-yoodle-renderer
+
+!!! homepage
+!! shelves (#15)
+! community posts
+~youtube.com##ytd-rich-shelf-renderer:has(ytd-rich-item-renderer[is-post])
+! mixes
+~youtube.com##ytd-rich-item-renderer:has(ytd-thumbnail-overlay-bottom-panel-renderer)
+
+!! interaction row
+! share button
+~youtube.com##ytd-button-renderer:has(>a:has(> yt-formatted-string:has-text(Share)))
+~youtube.com##ytd-button-renderer:has(>yt-button-shape:has(> button[aria-label=Share]))
+! save button
+~youtube.com##ytd-button-renderer:has(>yt-button-shape:has(> button:has-text(Save)):has(yt-icon))
+~youtube.com##tp-yt-paper-item:has(yt-icon):has(yt-formatted-string:has-text(Save))
+
+!! video title
+! supertitle (trending for x) or #hashtags
+~youtube.com###title>#super-title
+! collection badge
+~youtube.com##.badge.badge-style-type-collection
+! supertitle for location
+~youtube.com###info-container>#info>a.yt-simple-endpoint[style-target="bold"]
+! location pin
+~youtube.com##a:has(>yt-icon[icon="yt-icons:location_pin"])
+
+!! profile row
+! subscribe
+~youtube.com###subscribe-button
+
+!! video description
+! hashtags in description
+~youtube.com##span:has(>a[href^="/hashtag/"])
+
+!! video info container
+! remove hashtags
+~youtube.com###info-container #info>a.yt-simple-endpoint[href^="/hashtag/"]
+
+!! under description metadata box
+! featured music
+~youtube.com##ytd-video-description-music-section-renderer
+! featured playlist #37
+~youtube.com##ytd-video-description-course-section-renderer
+! age restricted notice
+~youtube.com##ytd-metadata-row-renderer:has(a[href="http://www.youtube.com/t/community_guidelines"])
+
+!! comments
+! channel member comment badge
+~youtube.com##span#sponsor-comment-badge
+! paid (thanks) comment badge
+~youtube.com###paid-comment-chip
+! paid (thanks) comment highlight
+~youtube.com##ytd-comment-renderer#comment:style(--ytd-comment-paid-background-color: transparent !important;)
+
+!! recommendations sidebar
+! mixes
+~youtube.com##.ytd-compact-radio-renderer
+
+!! endscreen
+! mixes
+~youtube.com##.ytp-videowall-still[data-is-mix=true]
+
+!!! channel page
+!! header / homepage
+! channel banner
+~youtube.com##.banner-visible-area
+! home page links
+~youtube.com###channel-header > #links-holder
+! channel handle
+~youtube.com###meta>p:has(>#channel-handle)
+!! tabs
+! community tab
+~youtube.com##tp-yt-paper-tab:has(> .tab-content:has-text(Community))
+! channels
+~youtube.com##tp-yt-paper-tab:has(> .tab-content:has-text(Channels))
+!! about
+! about > links
+~youtube.com###links-container.ytd-channel-about-metadata-renderer
+
+!!! live chat
+! chat window
+~youtube.com###chat
+! superchat/member ticker
+~youtube.com###ticker
+! superchat button
+~youtube.com###product-picker
+! superchats
+~youtube.com##yt-live-chat-paid-message-renderer
+! memberships
+~youtube.com##yt-live-chat-membership-item-renderer
+! paid badges
+~youtube.com##yt-live-chat-paid-sticker-renderer
+! chat member badge
+~youtube.com##yt-live-chat-author-badge-renderer[type=member]
+! revert member color
+~youtube.com###author-name.member:style(color: var(--yt-live-chat-secondary-text-color, rgba(255,255,255,0.7)) !important)
+! custom emojis
+~youtube.com##.emoji[data-emoji-id]
+! emoji-only messages
+~youtube.com##yt-live-chat-text-message-renderer:not(:has(#message:min-text-length(1)))
+
+!! premiere chat
+! hide "chat replay is disabled"
+~www.youtube.com##ytd-live-chat-frame:has(> ytd-message-renderer)
+
+
+! YouTube End
+
+
+
+
+
+
+
+! 04/07/2019 https://fellowsfilm.com
+fellowsfilm.com##.notice--hasImage.notice--warning.js-notice.notice > .uix_noticeInner > .notice-content
+fellowsfilm.com##.notice--hasImage.notice--warning.js-notice.notice > .uix_noticeInner
+fellowsfilm.com##.notice--hasImage.notice--warning.js-notice.notice
+
+
+
+
+
+
+! 2023-07-19 https://reboot.omsi-webdisk.de
+reboot.omsi-webdisk.de##.boxesContentTop > .boxContainer > div.box
+reboot.omsi-webdisk.de##.boxesContentTop > .boxContainer > section.box
+reboot.omsi-webdisk.de###sidebarForm > .box
+reboot.omsi-webdisk.de##.spendenrand.box
+||reboot.omsi-webdisk.de/images/omsi/OMSI_Coachbus256_desktop_en.png$image
+reboot.omsi-webdisk.de##.wcfAdLocationSidebarBottom.wcfAerosoftLocation > .slideshow_anzeigehinweis
+||reboot.omsi-webdisk.de/images/omsi/*.png$image

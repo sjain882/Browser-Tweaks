@@ -1,0 +1,19 @@
+Requires https://chrome.google.com/webstore/detail/stylus/clngdbkpkpeebahjckkjfobafhncgmne
+
+@-moz-document domain("photos.google.com") {
+    /* Disable the scale "previous to current image size" animation */
+    div[jsname="ImB6xd"] {
+        transform: matrix(1, 0, 0, 1, 0, 0) !important;
+    }
+
+    /* Disable the fade and slide animation */
+    div[jsname="ImB6xd"] > div[jsname="hPe5Dc"] {
+        transform: matrix(1, 0, 0, 1, 0, 0) !important;
+        opacity: 1 !important;
+    }
+
+    /* Disable the slide "previous to current image size" animation */
+    div[jsname="ImB6xd"] > div[jsname="hPe5Dc"] img {
+        transform: matrix(1, 0, 0, 1, 0, 0) !important;
+    }
+}
