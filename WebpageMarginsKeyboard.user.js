@@ -19,17 +19,17 @@ var adjustStep = 50;
 window.addEventListener('keydown', function(e) {
 
     // Shift page contents right
-    if (e.shiftKey && e.key == 'PageDown') {
+    if (e.ctrlKey && e.key == 'F12') {
         horizontalMargin = horizontalMargin + adjustStep;
         GM_addStyle("html{margin-left:" + horizontalMargin + "px}");
 
     // Shift page contents left
-    } else if (e.shiftKey && e.key == 'Delete') {
+    } else if (e.ctrlKey && e.key == 'F11') {
         horizontalMargin = horizontalMargin - adjustStep;
         GM_addStyle("html{margin-left:" + horizontalMargin + "px}");
 
     // Reset
-    } else if (e.shiftKey && e.key == 'End') {
+    } else if (e.ctrlKey && e.key == 'F9') {
         horizontalMargin = 0;
         GM_addStyle("html{margin-left: 0px}");
     }
