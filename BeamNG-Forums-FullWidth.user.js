@@ -14,7 +14,10 @@
 // @updateURL https://raw.githubusercontent.com/sjain882/Userscripts/main/BeamNG-Forums-FullWidth.user.js
 // ==/UserScript==
 
-// Toggling devtools, fullscreen, or changing the window dimensions (width or height) seems to break this script right now.
+// Toggling devtools, fullscreen, or changing the window dimensions (width or height) seems to break this script.
+// I suspect this is because .mainContent's width is set in the js (as it's applied directly to the element in HTML)
+// and every time the page dimensions change, this width value is re-applied by the js.
+// I can't fix this because the js a browser recieves is obfustucated and minified.
 
 // To set a custom width, replace 97 with your desired page-width percentage.
 GM_addStyle(".pageWidth { max-width: 97%; }");
