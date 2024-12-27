@@ -2,9 +2,8 @@
 // @name        BeamNG Forums Full Width
 // @namespace   https://www.github.com/sjain882
 // @author      sjain882 / shanie
-// @match       *://*.beamng.com/resources*
-// @match       *://*.beamng.com/forums*
-// @match       *://*.beamng.com/threads*
+// @match       *://www.beamng.com/*
+// @exclude     *://*.beamng.com/game*
 // @connect     www.beamng.com
 // @grant       GM_addStyle
 // @version     0.1.0
