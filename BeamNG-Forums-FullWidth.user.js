@@ -33,5 +33,5 @@ GM_addStyle(".resourceListSidebar { width: 320px; !important }");
 GM_addStyle(".resourceListMain { margin-left: 330px; !important }");
 
 // Fix announcement panels.
-// Sometimes (!) this breaks when you switch announcements using the tab selector below it.
+// If this is broken, use CTRL + F5
 GM_addStyle("li.panel:nth-child() { width: 1234px; !important }");
