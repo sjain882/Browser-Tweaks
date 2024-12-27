@@ -14,7 +14,7 @@
 // @updateURL https://raw.githubusercontent.com/sjain882/Userscripts/main/BeamNG-Forums-FullWidth.user.js
 // ==/UserScript==
 
-// For some reason, opening devtools while this script is active partially breaks it... not sure how to solve that.
+// Toggling devtools, fullscreen, or changing the window dimensions (width or height) seems to break this script right now.
 
 // To set a custom width, replace 97 with your desired page-width percentage.
 GM_addStyle(".pageWidth { max-width: 97%; }");
