@@ -22,7 +22,6 @@ GM_addStyle(".pageWidth { max-width: 97%; }");
  * No, I didn't make this margin bodge, it was written like that on the original pages. */
 
 function adjustPageLayout() {
-
 // for /forums:
 GM_addStyle(".sidebar { width: 350px !important; }");
 GM_addStyle(".mainContent { margin-left: 362px !important; }");
@@ -35,7 +34,6 @@ GM_addStyle(".resourceListMain { margin-left: 330px !important; }");
 // Fix announcement panels.
 // If this is broken, use CTRL + F5
 GM_addStyle("li.panel:nth-child() { width: 1234px !important; }");
-
 }
 
 
