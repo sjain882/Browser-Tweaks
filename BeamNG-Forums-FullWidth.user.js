@@ -13,27 +13,32 @@
 // @updateURL https://raw.githubusercontent.com/sjain882/Browser-Tweaks/main/BeamNG-Forums-FullWidth.user.js
 // ==/UserScript==
 
-// To set a custom width, replace 97 with your desired page-width percentage.
-GM_addStyle(".pageWidth { max-width: 97%; }");
 
 
 /* On the main forum homepages (/forums & /resources), make better use of the screen
  * by expanding the sidebar by 100px & shrinking the main content by 100px.
  * No, I didn't make this margin bodge, it was written like that on the original pages. */
 
-function adjustPageLayout() {
-// for /forums:
-GM_addStyle(".sidebar { width: 350px !important; }");
-GM_addStyle(".mainContent { margin-left: 362px !important; }");
-GM_addStyle(".mainContent. { margin-left: 362px !important; }");
+async function adjustPageLayout() {
 
-// for /resources:
-GM_addStyle(".resourceListSidebar { width: 320px !important; }");
-GM_addStyle(".resourceListMain { margin-left: 330px !important; }");
+    // Short delay
+    await sleep(250);
+    
+    // To set a custom width, replace 97 with your desired page-width percentage.
+    GM_addStyle(".pageWidth { max-width: 97%; }");
 
-// Fix announcement panels.
-// If this is broken, use CTRL + F5
-GM_addStyle("li.panel:nth-child() { width: 1234px !important; }");
+    // for /forums:
+    GM_addStyle(".sidebar { width: 350px !important; }");
+    GM_addStyle(".mainContent { margin-left: 362px !important; }");
+    GM_addStyle(".mainContent. { margin-left: 362px !important; }");
+
+    // for /resources:
+    GM_addStyle(".resourceListSidebar { width: 320px !important; }");
+    GM_addStyle(".resourceListMain { margin-left: 330px !important; }");
+
+    // Fix announcement panels.
+    // If this is broken, use CTRL + F5
+    GM_addStyle("li.panel:nth-child() { width: 1234px !important; }");
 }
 
 
@@ -44,3 +49,7 @@ window.addEventListener('load', function() {
 }, false);
 
 
+// Sleep function from https://stackoverflow.com/a/39914235/12948636
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
