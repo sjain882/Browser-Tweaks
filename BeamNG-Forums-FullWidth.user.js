@@ -17,7 +17,7 @@
 async function adjustPageLayout() {
 
     // Short delay
-    await sleep(250);
+    await sleep(100);
     
     // To set a custom width, replace 97 with your desired page-width percentage.
     GM_addStyle(".pageWidth { max-width: 97%; }");
