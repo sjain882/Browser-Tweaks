@@ -14,11 +14,6 @@
 // ==/UserScript==
 
 
-
-/* On the main forum homepages (/forums & /resources), make better use of the screen
- * by expanding the sidebar by 100px & shrinking the main content by 100px.
- * No, I didn't make this margin bodge, it was written like that on the original pages. */
-
 async function adjustPageLayout() {
 
     // Short delay
@@ -26,6 +21,10 @@ async function adjustPageLayout() {
     
     // To set a custom width, replace 97 with your desired page-width percentage.
     GM_addStyle(".pageWidth { max-width: 97%; }");
+    
+    /* On the main forum homepages (/forums & /resources), make better use of the screen
+    * by expanding the sidebar by 100px & shrinking the main content by 100px.
+    * No, I didn't make this margin bodge, it was written like that on the original pages. */
 
     // for /forums:
     GM_addStyle(".sidebar { width: 350px !important; }");
