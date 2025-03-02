@@ -47,8 +47,8 @@ async function adjustPageLayout() {
     GM_addStyle(".avatarScaler img { display: block !important; margin:auto !important; }")
 
     // Main forum homepage - expand unread section
-    GM_addStyle(".node .nodeLastPost { width: 320px !important; }")
-    GM_addStyle(".node .nodeControls { right: 340px !important; }")
+    GM_addStyle(".node .nodeLastPost { width: 300px !important; }")
+    GM_addStyle(".node .nodeControls { right: 320px !important; }")
 
 }
 
