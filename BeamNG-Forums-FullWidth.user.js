@@ -7,7 +7,7 @@
 // @exclude     *://documentation.beamng.com*
 // @exclude     *://shop.beamng.com*
 // @grant       GM_addStyle
-// @version     0.1.3
+// @version     0.1.4
 // @icon        https://www.google.com/s2/favicons?sz=64&domain=beamng.com
 // @description Makes the BeamNG forums fill 97% of the screen width, rather than the default 80%.
 // @homepage    https://www.beamng.com/threads/download-userscript-to-make-the-beamng-forums-full-width.102219 
@@ -40,6 +40,11 @@ async function adjustPageLayout() {
     // Fix announcement panels.
     // If this is broken, use CTRL + F5
     GM_addStyle("li.panel:nth-child() { width: 1234px !important; }");
+
+    // User profile pages
+    GM_addStyle(".profilePage .mast { width: 250px !important; }")
+    GM_addStyle(".profilePage .mainProfileColumn { margin-left: 260px !important; }")
+    GM_addStyle(".avatarScaler img { display: block !important; margin:auto !important; }")
 
 }
 
