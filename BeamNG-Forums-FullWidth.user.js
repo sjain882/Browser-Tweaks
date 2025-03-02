@@ -6,9 +6,10 @@
 // @exclude     *://*.beamng.com/game*
 // @connect     www.beamng.com
 // @grant       GM_addStyle
-// @version     0.1.1
+// @version     0.1.2
 // @icon        https://www.google.com/s2/favicons?sz=64&domain=beamng.com
 // @description Makes the BeamNG forums fill 97% of the screen width, rather than the default 80%.
+// @homepage    https://www.beamng.com/threads/download-userscript-to-make-the-beamng-forums-full-width.102219 
 // @downloadURL https://raw.githubusercontent.com/sjain882/Browser-Tweaks/main/BeamNG-Forums-FullWidth.user.js
 // @updateURL https://raw.githubusercontent.com/sjain882/Browser-Tweaks/main/BeamNG-Forums-FullWidth.user.js
 // ==/UserScript==
@@ -20,7 +21,7 @@ async function adjustPageLayout() {
     // await sleep(100);
     
     // To set a custom width, replace 97 with your desired page-width percentage.
-    GM_addStyle(".pageWidth { max-width: 97%; }");
+    GM_addStyle(".pageWidth { max-width: 97% !important; width: 9999px !important; margin: 0 auto !important; }");
     
     /* On the main forum homepages (/forums & /resources), make better use of the screen
     * by expanding the sidebar by 100px & shrinking the main content by 100px.
