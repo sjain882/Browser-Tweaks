@@ -39,7 +39,6 @@ async function adjustPageLayout() {
     const currentURL = window.location.pathname;
     const singleModPageRegex = new RegExp("\.\d+");
     var onSingleModPage = singleModPageRegex.test(currentURL);
-    console.log(onSingleModPage);
 
     // Don't expand the sidebar if on individual mod page - main content is more valuable here
     if (!onSingleModPage)
