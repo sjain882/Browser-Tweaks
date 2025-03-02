@@ -2,11 +2,12 @@
 // @name        BeamNG Forums Full Width
 // @namespace   https://www.github.com/sjain882
 // @author      sjain882 / shanie
-// @match       *://www.beamng.com/*
+// @match       *://*.beamng.com/*
 // @exclude     *://*.beamng.com/game*
-// @connect     www.beamng.com
+// @exclude     *://documentation.beamng.com*
+// @exclude     *://shop.beamng.com*
 // @grant       GM_addStyle
-// @version     0.1.2
+// @version     0.1.3
 // @icon        https://www.google.com/s2/favicons?sz=64&domain=beamng.com
 // @description Makes the BeamNG forums fill 97% of the screen width, rather than the default 80%.
 // @homepage    https://www.beamng.com/threads/download-userscript-to-make-the-beamng-forums-full-width.102219 
@@ -39,6 +40,7 @@ async function adjustPageLayout() {
     // Fix announcement panels.
     // If this is broken, use CTRL + F5
     GM_addStyle("li.panel:nth-child() { width: 1234px !important; }");
+
 }
 
 
