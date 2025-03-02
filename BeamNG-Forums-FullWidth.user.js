@@ -7,7 +7,7 @@
 // @exclude     *://documentation.beamng.com*
 // @exclude     *://shop.beamng.com*
 // @grant       GM_addStyle
-// @version     0.1.5
+// @version     0.2.0
 // @icon        https://www.google.com/s2/favicons?sz=64&domain=beamng.com
 // @description Makes the BeamNG forums fill 97% of the screen width, rather than the default 80%.
 // @homepageURL https://raw.githubusercontent.com/sjain882/Browser-Tweaks
@@ -29,14 +29,26 @@ async function adjustPageLayout() {
     * by expanding the sidebar by 100px & shrinking the main content by 100px.
     * No, I didn't make this margin bodge, it was written like that on the original pages. */
 
-    // for /forums:
-    GM_addStyle(".sidebar { width: 350px !important; }");
-    GM_addStyle(".mainContent { margin-left: 362px !important; }");
-    GM_addStyle(".mainContent. { margin-left: 362px !important; }");
-
-    // for /resources:
+    // If we're on the main mods/resources homepage (/resources):
     GM_addStyle(".resourceListSidebar { width: 320px !important; }");
     GM_addStyle(".resourceListMain { margin-left: 330px !important; }");
+
+    /* Determine if we are on an individual mod page or the main mods homepage
+     * Both are stored under /resources,
+     * but individual mod pages have a URL like /resources/****.ddddd/ (where d is a digit) */
+    const currentURL = window.location.pathname;
+    const singleModPageRegex = new RegExp("\.\d+");
+    var onSingleModPage = singleModPageRegex.test(currentURL);
+    console.log(onSingleModPage);
+
+    // Don't expand the sidebar if on individual mod page - main content is more valuable here
+    if (!onSingleModPage)
+    {
+        // For main forum homepage & individual mod pages (/forums and /resources/****.dddd/):
+        GM_addStyle(".sidebar { width: 350px !important; }");
+        GM_addStyle(".mainContent { margin-left: 362px !important; }");
+        GM_addStyle(".mainContent. { margin-left: 362px !important; }");
+    }
 
     // Fix announcement panels.
     // If this is broken, use CTRL + F5
