@@ -37,14 +37,14 @@ async function adjustPageLayout() {
      * Both are stored under /resources,
      * but individual mod pages have a URL like /resources/****.ddddd/ (where d is a digit) */
     const currentURL = window.location.pathname;
-    const singleModPageRegex = new RegExp("\.\d+");
+    const singleModPageRegex = /\.\d+/g
     var onSingleModPage = singleModPageRegex.test(currentURL);
+    console.log(onSingleModPage);
 
     // Don't expand the sidebar if on individual mod page - main content is more valuable here
     if (!onSingleModPage)
     {
-        /* This if statment is necessary as the below element names appear on both the
-         * main forum homepage and individual mod pages (/forums and /resources/****.dddd/) */
+        // For main forum homepage & individual mod pages (/forums and /resources/****.dddd/):
         GM_addStyle(".sidebar { width: 350px !important; }");
         GM_addStyle(".mainContent { margin-left: 362px !important; }");
         GM_addStyle(".mainContent. { margin-left: 362px !important; }");
