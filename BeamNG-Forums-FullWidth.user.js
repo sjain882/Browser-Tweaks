@@ -7,10 +7,10 @@
 // @exclude     *://documentation.beamng.com*
 // @exclude     *://shop.beamng.com*
 // @grant       GM_addStyle
-// @version     0.2.1
+// @version     0.2.2
 // @icon        https://www.google.com/s2/favicons?sz=64&domain=beamng.com
 // @description Makes the BeamNG forums fill 97% of the screen width, rather than the default 80%.
-// @homepageURL https://raw.githubusercontent.com/sjain882/Browser-Tweaks
+// @homepageURL https://www,github.com/sjain882/Browser-Tweaks
 // @supportURL  https://www.beamng.com/threads/download-userscript-to-make-the-beamng-forums-full-width.102219
 // @downloadURL https://raw.githubusercontent.com/sjain882/Browser-Tweaks/main/BeamNG-Forums-FullWidth.user.js
 // @updateURL   https://raw.githubusercontent.com/sjain882/Browser-Tweaks/main/BeamNG-Forums-FullWidth.user.js
