@@ -11,6 +11,7 @@
 // @supportURL  https://www.github.com/sjain882/Browser-Tweaks/issues
 // @downloadURL https://raw.githubusercontent.com/sjain882/Browser-Tweaks/main/MetOfficeWeatherMaps-LargeSliders.user.js
 // @updateURL   https://raw.githubusercontent.com/sjain882/Browser-Tweaks/main/MetOfficeWeatherMaps-LargeSliders.user.js
+// @license MIT
 // ==/UserScript==
 
 GM_addStyle(".ms-slide { min-height: 72px !important; }");
