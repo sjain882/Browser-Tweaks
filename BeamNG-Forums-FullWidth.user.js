@@ -3,11 +3,13 @@
 // @namespace   https://www.github.com/sjain882
 // @author      sjain882 / shanie
 // @match       *://*.beamng.com/*
+// @match       *://beamng.com/*
 // @exclude     *://*.beamng.com/game*
+// @exclude     *://beamng.com/game*
 // @exclude     *://documentation.beamng.com*
 // @exclude     *://shop.beamng.com*
 // @grant       GM_addStyle
-// @version     0.2.2
+// @version     0.2.3
 // @icon        https://www.google.com/s2/favicons?sz=64&domain=beamng.com
 // @description Makes the BeamNG forums fill 97% of the screen width, rather than the default 80%.
 // @homepageURL https://www,github.com/sjain882/Browser-Tweaks
