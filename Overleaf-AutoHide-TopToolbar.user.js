@@ -6,7 +6,7 @@
 // @grant       GM_addStyle
 // @version     0.1.0
 // @icon        https://www.google.com/s2/favicons?sz=64&domain=overleaf.com
-// @description Auto-hide top toolbar on overleaf to increase vertical space. Hover over that area to show it again. I combine this with a dedicated Cromite profile shortcut with -alt-high-dpi-setting=96 /high-dpi-support=1 /force-device-scale-factor=0.5 to maximise vertical space, as I only look at Overleaf in this profile (no need to access tab/URL bar). This effectively creates an almost-fullscreen dedicated Overleaf app - very useful for small laptop screens.
+// @description (Requires Tampermonkey Legacy / MV2!) Auto-hide top toolbar on overleaf to increase vertical space. Hover over that area to show it again. I combine this with a dedicated Cromite profile shortcut with -alt-high-dpi-setting=96 /high-dpi-support=1 /force-device-scale-factor=0.5 to maximise vertical space, as I only look at Overleaf in this profile (no need to access tab/URL bar). This effectively creates an almost-fullscreen dedicated Overleaf app - very useful for small laptop screens.
 // @homepageURL https://www,github.com/sjain882/Browser-Tweaks
 // @supportURL  https://www,github.com/sjain882/Browser-Tweaks/issues
 // @downloadURL https://raw.githubusercontent.com/sjain882/Browser-Tweaks/main/Overleaf-AutoHide-TopToolbar.user.js
