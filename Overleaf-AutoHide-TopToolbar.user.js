@@ -43,7 +43,7 @@
     if (!toolbar || !body) return;
 
     const toolbarHeight = toolbar.getBoundingClientRect().height + 'px';
-    let visible = false;
+    let visible = true; // start visible so hideToolbar() will run
 
     // invisible hover zone at top
     const hoverZone = document.createElement('div');
@@ -71,11 +71,16 @@
       visible = false;
     }
 
-    // --- NEW: hide once everything is loaded ---
-    window.addEventListener('load', () => {
-      // wait a tick to let Overleaf finish rendering flexbox
-      setTimeout(hideToolbar, 300);
-    });
+    // --- NEW: delayed hide with retries ---
+    function delayedHide(attempt = 0) {
+      if (attempt > 10) return; // give up after ~2.5s
+      if (toolbar.offsetHeight > 0) {
+        hideToolbar();
+      } else {
+        setTimeout(() => delayedHide(attempt + 1), 250);
+      }
+    }
+    delayedHide();
 
     hoverZone.addEventListener('mouseenter', showToolbar);
     toolbar.addEventListener('mouseleave', (ev) => {
