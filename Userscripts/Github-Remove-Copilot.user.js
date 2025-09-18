@@ -8,10 +8,10 @@
 // @version     0.1.1
 // @icon        https://www.google.com/s2/favicons?sz=64&domain=github.com
 // @description Removes the entire Github Copilot box from the Github homepage / feedpage
-// @homepageURL https://www.github.com/sjain882/Browser-Tweaks
+// @homepageURL https://www.github.com/sjain882/Browser-Tweaks/Userscripts
 // @supportURL  https://www.github.com/sjain882/Browser-Tweaks/issues
-// @downloadURL https://raw.githubusercontent.com/sjain882/Browser-Tweaks/main/Github-Remove-Copilot.user.js
-// @updateURL   https://raw.githubusercontent.com/sjain882/Browser-Tweaks/main/Github-Remove-Copilot.user.js
+// @downloadURL https://raw.githubusercontent.com/sjain882/Browser-Tweaks/main/Userscripts/Github-Remove-Copilot.user.js
+// @updateURL   https://raw.githubusercontent.com/sjain882/Browser-Tweaks/main/Userscripts/Github-Remove-Copilot.user.js
 // ==/UserScript==
 
 GM_addStyle(".copilotPreview__container { display: none !important; }");
