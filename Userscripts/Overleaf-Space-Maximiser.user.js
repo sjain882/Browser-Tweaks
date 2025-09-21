@@ -3,7 +3,7 @@
 // @namespace   https://www.github.com/sjain882
 // @author      sjain882 / shanie
 // @match       https://www.overleaf.com/project/*
-// @version     0.2.0
+// @version     0.2.1
 // @icon        https://www.google.com/s2/favicons?sz=64&domain=overleaf.com
 // @description (Requires Tampermonkey Legacy / MV2!) Auto-hide Overleaf top toolbar to maximise vertical space. Hover over that area to show it again. To optionally maximise horizontal space, you can optimise file tree spacing and/or hide file outline to maximise horizontal space. Toggle with bools at top of code. I combine this with a dedicated Cromite profile shortcut with -alt-high-dpi-setting=96 /high-dpi-support=1 /force-device-scale-factor=0.5 to maximise vertical space, as I only look at Overleaf in this profile (no need to access tab/URL bar). This effectively creates an almost-fullscreen dedicated Overleaf app - very useful for small laptop screens.
 // @homepageURL https://www.github.com/sjain882/Browser-Tweaks
@@ -12,6 +12,7 @@
 // @supportURL  https://www.github.com/sjain882/Browser-Tweaks/issues
 // @downloadURL https://raw.githubusercontent.com/sjain882/Browser-Tweaks/main/Userscripts/Overleaf-Space-Maximiser.user.js
 // @updateURL   https://raw.githubusercontent.com/sjain882/Browser-Tweaks/main/Userscripts/Overleaf-Space-Maximiser.user.js
+// @grant       GM_addStyle
 // @license MIT
 // ==/UserScript==
 
