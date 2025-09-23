@@ -3,7 +3,7 @@
 // @namespace   https://www.github.com/sjain882
 // @author      sjain882 / shanie
 // @match       https://www.overleaf.com/project/*
-// @version     0.3.0
+// @version     0.3.1
 // @icon        https://www.google.com/s2/favicons?sz=64&domain=overleaf.com
 // @description (Requires Tampermonkey Legacy / MV2!) Auto-hide Overleaf top toolbar to maximise vertical space. Hover over that area to show it again. To optionally maximise horizontal space, you can optimise file tree spacing and/or hide file outline to maximise horizontal space. Toggle with bools at top of code. I combine this with a dedicated Cromite profile shortcut with -alt-high-dpi-setting=96 /high-dpi-support=1 /force-device-scale-factor=0.5 to maximise vertical space, as I only look at Overleaf in this profile (no need to access tab/URL bar). This effectively creates an almost-fullscreen dedicated Overleaf app - very useful for small laptop screens.
 // @homepageURL https://www.github.com/sjain882/Browser-Tweaks
@@ -28,12 +28,15 @@
   "use strict";
 
   var $jqueryOverleafUserScript = jQuery.noConflict();
-// $j is now an alias to the jQuery function; creating the new alias is optional.
+  // $j is now an alias to the jQuery function; creating the new alias is optional.
 
-    // Load saved states or default to false
-    let hideFileOutlineFromStorage = localStorage.getItem('ls_HIDE_FILE_OUTLINE') === 'true';
-    let optimiseFileTreeSpacingFromStorage = localStorage.getItem('ls_OPTIMISE_FILE_TREE_SPACING') === 'true';
-    let fileTreeFontSizeFromStorage = localStorage.getItem('ls_FILE_TREE_FONT_SIZE') === 'true';
+  // Load saved states or default to false
+  let hideFileOutlineFromStorage =
+    localStorage.getItem("ls_HIDE_FILE_OUTLINE") === "true";
+  let optimiseFileTreeSpacingFromStorage =
+    localStorage.getItem("ls_OPTIMISE_FILE_TREE_SPACING") === "true";
+  let fileTreeFontSizeFromStorage =
+    localStorage.getItem("ls_FILE_TREE_FONT_SIZE") === "true";
 
   var setIntervalFileTree;
 
@@ -67,18 +70,36 @@
       init: function () {
         // runs after initialization completes
         // override saved value
-        this.set("HIDE_FILE_OUTLINE", localStorage.getItem('ls_HIDE_FILE_OUTLINE') === 'true');
-        this.set("OPTIMISE_FILE_TREE_SPACING", localStorage.getItem('ls_OPTIMISE_FILE_TREE_SPACING') === 'true');
-        this.set("FILE_TREE_FONT_SIZE", localStorage.getItem('ls_FILE_TREE_FONT_SIZE') || "8");
+        this.set(
+          "HIDE_FILE_OUTLINE",
+          localStorage.getItem("ls_HIDE_FILE_OUTLINE") === "true"
+        );
+        this.set(
+          "OPTIMISE_FILE_TREE_SPACING",
+          localStorage.getItem("ls_OPTIMISE_FILE_TREE_SPACING") === "true"
+        );
+        this.set(
+          "FILE_TREE_FONT_SIZE",
+          localStorage.getItem("ls_FILE_TREE_FONT_SIZE") || "8"
+        );
 
         optimiseFileTree();
         hideFileOutline();
         gmc.open();
       },
       save: function () {
-        localStorage.setItem('ls_HIDE_FILE_OUTLINE', gmc.get('HIDE_FILE_OUTLINE'));
-        localStorage.setItem('ls_OPTIMISE_FILE_TREE_SPACING', gmc.get('OPTIMISE_FILE_TREE_SPACING'));
-        localStorage.setItem('ls_FILE_TREE_FONT_SIZE', gmc.get('FILE_TREE_FONT_SIZE'));
+        localStorage.setItem(
+          "ls_HIDE_FILE_OUTLINE",
+          gmc.get("HIDE_FILE_OUTLINE")
+        );
+        localStorage.setItem(
+          "ls_OPTIMISE_FILE_TREE_SPACING",
+          gmc.get("OPTIMISE_FILE_TREE_SPACING")
+        );
+        localStorage.setItem(
+          "ls_FILE_TREE_FONT_SIZE",
+          gmc.get("FILE_TREE_FONT_SIZE")
+        );
         optimiseFileTree();
         hideFileOutline();
         window.location.reload();
@@ -120,22 +141,7 @@
           padding-right: 0 !important;
         }
       `);
-    } else {
-      
- // UNREACHABLE START
-
-      GM_addStyle(`
-        #panel-file-tree > div > div.file-tree-inner {
-          font-size: var(--font-size-02) !important;
-        }
-
-        .item-name-button {
-          padding-right: var(--spacing-09) !important;
-        }
-      `);
     }
-    
- // UNREACHABLE END
   }
 
   function collapsePanels() {
@@ -200,42 +206,6 @@
 
       // Reapply every 500ms to override layout JS
       setIntervalFileTree = setInterval(collapsePanels, 500);
-    } else {
-
- // UNREACHABLE START
-
-      if (setIntervalFileTree) clearInterval(setIntervalFileTree);
-      setIntervalFileTree = null;
-
-
-      // https://stackoverflow.com/a/47540182
-     //  https://plnkr.co/edit/hP4IyF64trUEjTmZpwBK?p=preview&preview
-      $jqueryOverleafUserScript(".outline-container div").removeClass("outline-container");
-      $jqueryOverleafUserScript(".vertical-resize-handle div").removeClass("vertical-resize-handle");
-
-            GM_addStyle(`
-
-            .outline-pane {
-                color: var(--content-primary-dark) !important;
-                display: flex !important;
-                flex-flow: column !important;
-                font-size: var(--font-size-02) !important;
-                height: 100% !important;
-                line-height: var(--line-height-02) !important;
-            }
-
-            .vertical-resize-handle {
-              height: 6px !important;
-            }
-
-            .file-tree
-            {
-              height: 100% !important;
-            }
-            `);
-
-            
- // UNREACHABLE END
     }
   }
 
