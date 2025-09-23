@@ -3,7 +3,7 @@
 // @namespace   https://www.github.com/sjain882
 // @author      sjain882 / shanie
 // @match       https://www.overleaf.com/project/*
-// @version     0.3.1
+// @version     0.4.0
 // @icon        https://www.google.com/s2/favicons?sz=64&domain=overleaf.com
 // @description (Requires Tampermonkey Legacy / MV2!) Auto-hide Overleaf top toolbar to maximise vertical space. Hover over that area to show it again. To optionally maximise horizontal space, you can optimise file tree spacing and/or hide file outline to maximise horizontal space. Toggle with bools at top of code. I combine this with a dedicated Cromite profile shortcut with -alt-high-dpi-setting=96 /high-dpi-support=1 /force-device-scale-factor=0.5 to maximise vertical space, as I only look at Overleaf in this profile (no need to access tab/URL bar). This effectively creates an almost-fullscreen dedicated Overleaf app - very useful for small laptop screens.
 // @homepageURL https://www.github.com/sjain882/Browser-Tweaks
@@ -85,7 +85,7 @@
 
         optimiseFileTree();
         hideFileOutline();
-        gmc.open();
+        // gmc.open();
       },
       save: function () {
         localStorage.setItem(
@@ -129,6 +129,81 @@
     }
 
   `);
+
+  function makeButton() {
+    const a = document.createElement("a");
+    a.className =
+      "d-inline-grid toolbar-header-upgrade-prompt btn btn-primary btn-sm";
+    a.setAttribute("tabindex", "0");
+    a.setAttribute("href", "#"); // prevents navigation
+    a.setAttribute("role", "button");
+    a.dataset.osmSettings = "1"; // marker so we don't duplicate
+    const span = document.createElement("span");
+    span.className = "button-content";
+    span.setAttribute("aria-hidden", "false");
+    span.textContent = "Overleaf Space Maximiser Settings";
+    a.appendChild(span);
+
+    a.addEventListener("click", (ev) => {
+      ev.preventDefault();
+      try {
+        gmc.open(); // open the GM_config UI from inside the userscript scope
+      } catch (err) {
+        console.error("Failed to open GM_config:", err);
+        alert("Could not open settings UI — see console for details.");
+      }
+    });
+
+    return a;
+  }
+
+  function insertIntoContainer(container) {
+    if (!container) return false;
+    // avoid duplicates
+    if (container.querySelector('a[data-osm-settings="1"]')) return true;
+    const btn = makeButton();
+
+    // insert before the first "Upgrade" button if present, otherwise append
+    const firstUpgrade = container.querySelector(
+      "a.toolbar-header-upgrade-prompt"
+    );
+    if (firstUpgrade) container.insertBefore(btn, firstUpgrade);
+    else container.appendChild(btn);
+
+    return true;
+  }
+
+  function tryFindAndInsert() {
+    // prefer targeting the nav by aria-label so it's less brittle
+    const nav =
+      document.querySelector('nav[aria-label="Project actions"]') ||
+      document.querySelector("nav.toolbar.toolbar-header") ||
+      document.querySelector("nav.toolbar-header") ||
+      document.querySelector("nav.toolbar");
+    if (!nav) return false;
+
+    // direct-child selector to match your pasted markup:
+    const container =
+      nav.querySelector("div.d-flex.align-items-center") ||
+      nav.querySelector(".d-flex.align-items-center");
+    return insertIntoContainer(container);
+  }
+
+  // try immediately (in case element already present)
+  if (!tryFindAndInsert()) {
+    // element not found yet — observe DOM until the toolbar appears
+    const mo = new MutationObserver((mutations, observer) => {
+      if (tryFindAndInsert()) {
+        observer.disconnect();
+      }
+    });
+    mo.observe(document.documentElement || document.body, {
+      childList: true,
+      subtree: true,
+    });
+    // also set a fallback timeout to stop observing after 30s
+    setTimeout(() => mo.disconnect(), 30000);
+  }
 
   function optimiseFileTree() {
     if (gmc.get("OPTIMISE_FILE_TREE_SPACING")) {
