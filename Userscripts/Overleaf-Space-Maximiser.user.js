@@ -3,7 +3,7 @@
 // @namespace   https://www.github.com/sjain882
 // @author      sjain882 / shanie
 // @match       https://www.overleaf.com/project/*
-// @version     0.2.1
+// @version     0.3.0
 // @icon        https://www.google.com/s2/favicons?sz=64&domain=overleaf.com
 // @description (Requires Tampermonkey Legacy / MV2!) Auto-hide Overleaf top toolbar to maximise vertical space. Hover over that area to show it again. To optionally maximise horizontal space, you can optimise file tree spacing and/or hide file outline to maximise horizontal space. Toggle with bools at top of code. I combine this with a dedicated Cromite profile shortcut with -alt-high-dpi-setting=96 /high-dpi-support=1 /force-device-scale-factor=0.5 to maximise vertical space, as I only look at Overleaf in this profile (no need to access tab/URL bar). This effectively creates an almost-fullscreen dedicated Overleaf app - very useful for small laptop screens.
 // @homepageURL https://www.github.com/sjain882/Browser-Tweaks
@@ -12,15 +12,79 @@
 // @supportURL  https://www.github.com/sjain882/Browser-Tweaks/issues
 // @downloadURL https://raw.githubusercontent.com/sjain882/Browser-Tweaks/main/Userscripts/Overleaf-Space-Maximiser.user.js
 // @updateURL   https://raw.githubusercontent.com/sjain882/Browser-Tweaks/main/Userscripts/Overleaf-Space-Maximiser.user.js
+// @require     https://openuserjs.org/src/libs/sizzle/GM_config.js
 // @grant       GM_addStyle
+// @grant       GM_getValue
+// @grant       GM_setValue
+// @grant       GM.getValue
+// @grant       GM.setValue
+// @require     http://code.jquery.com/jquery-3.7.1.min.js
 // @license MIT
 // ==/UserScript==
 
-(function () {
-  'use strict';
+/* globals $, GM_config */
 
-  var hideFileOutline = true;
-  var optimiseFileTreeSpacing = true;
+(function () {
+  "use strict";
+
+  var $jqueryOverleafUserScript = jQuery.noConflict();
+// $j is now an alias to the jQuery function; creating the new alias is optional.
+
+    // Load saved states or default to false
+    let hideFileOutlineFromStorage = localStorage.getItem('ls_HIDE_FILE_OUTLINE') === 'true';
+    let optimiseFileTreeSpacingFromStorage = localStorage.getItem('ls_OPTIMISE_FILE_TREE_SPACING') === 'true';
+    let fileTreeFontSizeFromStorage = localStorage.getItem('ls_FILE_TREE_FONT_SIZE') === 'true';
+
+  var setIntervalFileTree;
+
+  let gmc = new GM_config({
+    id: "OverleafMaximiserConfig", // The id used for this instance of GM_config
+    title: "Settings", // Panel Title
+
+    // Fields object
+    fields: {
+      // This is the id of the field
+      HIDE_FILE_OUTLINE: {
+        label: "Hide File Outline", // Appears next to field
+        type: "checkbox", // Makes this setting a checkbox
+        default: true, // Default value if user doesn't change it
+      },
+      // This is the id of the field
+      OPTIMISE_FILE_TREE_SPACING: {
+        label: "Optimise File Tree Spacing", // Appears next to field
+        type: "checkbox", // Makes this setting a checkbox
+        default: true, // Default value if user doesn't change it
+      },
+      // This is the id of the field
+      FILE_TREE_FONT_SIZE: {
+        label: "File Tree Font Size", // Appears next to field
+        type: "text", // Makes this setting a text input
+        default: "8", // Default value if user doesn't change it
+      },
+    },
+
+    events: {
+      init: function () {
+        // runs after initialization completes
+        // override saved value
+        this.set("HIDE_FILE_OUTLINE", localStorage.getItem('ls_HIDE_FILE_OUTLINE') === 'true');
+        this.set("OPTIMISE_FILE_TREE_SPACING", localStorage.getItem('ls_OPTIMISE_FILE_TREE_SPACING') === 'true');
+        this.set("FILE_TREE_FONT_SIZE", localStorage.getItem('ls_FILE_TREE_FONT_SIZE') || "8");
+
+        optimiseFileTree();
+        hideFileOutline();
+        gmc.open();
+      },
+      save: function () {
+        localStorage.setItem('ls_HIDE_FILE_OUTLINE', gmc.get('HIDE_FILE_OUTLINE'));
+        localStorage.setItem('ls_OPTIMISE_FILE_TREE_SPACING', gmc.get('OPTIMISE_FILE_TREE_SPACING'));
+        localStorage.setItem('ls_FILE_TREE_FONT_SIZE', gmc.get('FILE_TREE_FONT_SIZE'));
+        optimiseFileTree();
+        hideFileOutline();
+        window.location.reload();
+      },
+    },
+  });
 
   GM_addStyle(`
     nav.toolbar.toolbar-header {
@@ -45,77 +109,134 @@
 
   `);
 
-
-  if (optimiseFileTreeSpacing) {
-    GM_addStyle(`
+  function optimiseFileTree() {
+    if (gmc.get("OPTIMISE_FILE_TREE_SPACING")) {
+      GM_addStyle(`
         #panel-file-tree > div > div.file-tree-inner {
-          font-size: 8pt !important;
+          font-size: ${gmc.get("FILE_TREE_FONT_SIZE")}pt !important;
         }
 
         .item-name-button {
           padding-right: 0 !important;
         }
-        `)
+      `);
+    } else {
+      
+ // UNREACHABLE START
+
+      GM_addStyle(`
+        #panel-file-tree > div > div.file-tree-inner {
+          font-size: var(--font-size-02) !important;
+        }
+
+        .item-name-button {
+          padding-right: var(--spacing-09) !important;
+        }
+      `);
+    }
+    
+ // UNREACHABLE END
   }
 
-
   function collapsePanels() {
-    const separator = document.querySelector('[role="separator"][aria-controls="panel-file-tree"]');
+    const separator = document.querySelector(
+      '[role="separator"][aria-controls="panel-file-tree"]'
+    );
     if (!separator) return;
 
     // Force aria-valuenow to 0
-    separator.setAttribute('aria-valuenow', '0');
+    separator.setAttribute("aria-valuenow", "0");
 
     // Collapse the file tree panel
-    const fileTreePanel = document.querySelector('#panel-file-tree');
+    const fileTreePanel = document.querySelector("#panel-file-tree");
     if (fileTreePanel) {
-      fileTreePanel.style.flexBasis = '0px';
-      fileTreePanel.style.height = '0px';
-      fileTreePanel.style.minHeight = '0px';
-      fileTreePanel.style.overflow = 'hidden';
+      fileTreePanel.style.flexBasis = "0px";
+      fileTreePanel.style.height = "0px";
+      fileTreePanel.style.minHeight = "0px";
+      fileTreePanel.style.overflow = "hidden";
     }
 
     // Expand remaining panels if needed
-    const otherPanels = document.querySelectorAll('[data-panel-group-id=":r3:"] > div');
-    otherPanels.forEach(panel => {
-      if (panel !== separator && panel.id !== 'panel-file-tree') {
-        panel.style.flexGrow = '1';
+    const otherPanels = document.querySelectorAll(
+      '[data-panel-group-id=":r3:"] > div'
+    );
+    otherPanels.forEach((panel) => {
+      if (panel !== separator && panel.id !== "panel-file-tree") {
+        panel.style.flexGrow = "1";
       }
     });
   }
 
-  if (hideFileOutline) {
-    GM_addStyle(`
+  function hideFileOutline() {
+    if (gmc.get("HIDE_FILE_OUTLINE")) {
+      GM_addStyle(`
 
-          .outline-pane {
-            position: absolute !important;
-            width: 0 !important;
-            height: 0 !important;
-            overflow: hidden !important;
-          }
+            .outline-pane {
+              position: absolute !important;
+              width: 0 !important;
+              height: 0 !important;
+              overflow: hidden !important;
+            }
 
-          .outline-container {
-            position: absolute !important;
-            width: 0 !important;
-            height: 0 !important;
-            overflow: hidden !important;
-          }
+            .outline-container {
+              position: absolute !important;
+              width: 0 !important;
+              height: 0 !important;
+              overflow: hidden !important;
+            }
 
-          #panel-sidebar > nav > div > div:nth-child(2) {
-            position: absolute !important;
-            width: 0 !important;
-            height: 0 !important;
-            overflow: hidden !important;
-          }
+            .vertical-resize-handle {
+              position: absolute !important;
+              width: 0 !important;
+              height: 0 !important;
+              overflow: hidden !important;
+            }
 
-          .file-tree
-          {
-            height: 100% !important;
-          }
-          `)
+            .file-tree
+            {
+              height: 100% !important;
+            }
+            `);
 
-    // Reapply every 500ms to override layout JS
-    setInterval(collapsePanels, 500);
+      // Reapply every 500ms to override layout JS
+      setIntervalFileTree = setInterval(collapsePanels, 500);
+    } else {
+
+ // UNREACHABLE START
+
+      if (setIntervalFileTree) clearInterval(setIntervalFileTree);
+      setIntervalFileTree = null;
+
+
+      // https://stackoverflow.com/a/47540182
+     //  https://plnkr.co/edit/hP4IyF64trUEjTmZpwBK?p=preview&preview
+      $jqueryOverleafUserScript(".outline-container div").removeClass("outline-container");
+      $jqueryOverleafUserScript(".vertical-resize-handle div").removeClass("vertical-resize-handle");
+
+            GM_addStyle(`
+
+            .outline-pane {
+                color: var(--content-primary-dark) !important;
+                display: flex !important;
+                flex-flow: column !important;
+                font-size: var(--font-size-02) !important;
+                height: 100% !important;
+                line-height: var(--line-height-02) !important;
+            }
+
+            .vertical-resize-handle {
+              height: 6px !important;
+            }
+
+            .file-tree
+            {
+              height: 100% !important;
+            }
+            `);
+
+            
+ // UNREACHABLE END
+    }
   }
 
   function setupToolbarHider(toolbar) {
@@ -124,34 +245,34 @@
     let visible = false;
 
     // invisible hover zone at top
-    const hoverZone = document.createElement('div');
-    hoverZone.style.position = 'fixed';
-    hoverZone.style.top = '0';
-    hoverZone.style.left = '0';
-    hoverZone.style.width = '100%';
-    hoverZone.style.height = '8px';
-    hoverZone.style.zIndex = '2000';
-    hoverZone.style.background = 'transparent';
+    const hoverZone = document.createElement("div");
+    hoverZone.style.position = "fixed";
+    hoverZone.style.top = "0";
+    hoverZone.style.left = "0";
+    hoverZone.style.width = "100%";
+    hoverZone.style.height = "8px";
+    hoverZone.style.zIndex = "2000";
+    hoverZone.style.background = "transparent";
     document.body.appendChild(hoverZone);
 
     function showToolbar() {
       if (visible) return;
-      toolbar.classList.remove('toolbar-hidden');
-      toolbar.style.position = 'relative'; // put back into flex flow
+      toolbar.classList.remove("toolbar-hidden");
+      toolbar.style.position = "relative"; // put back into flex flow
       visible = true;
     }
 
     function hideToolbar() {
       if (!visible) return;
-      toolbar.classList.add('toolbar-hidden');
+      toolbar.classList.add("toolbar-hidden");
       visible = false;
     }
 
     // start hidden
     hideToolbar();
 
-    hoverZone.addEventListener('mouseenter', showToolbar);
-    toolbar.addEventListener('mouseleave', (ev) => {
+    hoverZone.addEventListener("mouseenter", showToolbar);
+    toolbar.addEventListener("mouseleave", (ev) => {
       const rt = ev.relatedTarget;
       if (rt && (rt === hoverZone || hoverZone.contains(rt))) return;
       hideToolbar();
@@ -159,7 +280,7 @@
   }
 
   const observer = new MutationObserver((_, obs) => {
-    const toolbar = document.querySelector('nav.toolbar.toolbar-header');
+    const toolbar = document.querySelector("nav.toolbar.toolbar-header");
     if (toolbar) {
       setupToolbarHider(toolbar);
       obs.disconnect();
