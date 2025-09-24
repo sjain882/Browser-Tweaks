@@ -3,9 +3,9 @@
 // @namespace   https://www.github.com/sjain882
 // @author      sjain882 / shanie
 // @match       https://www.overleaf.com/project/*
-// @version     0.4.1
+// @version     0.4.2
 // @icon        https://www.google.com/s2/favicons?sz=64&domain=overleaf.com
-// @description (Requires Tampermonkey Legacy / MV2!) Auto-hide Overleaf top toolbar to maximise vertical space. Hover over that area to show it again. To optionally maximise horizontal space, you can optimise file tree spacing and/or hide file outline to maximise horizontal space. Toggle with settings button in toolbar. I combine this with a dedicated Cromite profile shortcut with -alt-high-dpi-setting=96 /high-dpi-support=1 /force-device-scale-factor=0.5 to maximise vertical space, as I only look at Overleaf in this profile (no need to access tab/URL bar). This effectively creates an almost-fullscreen dedicated Overleaf app - very useful for small laptop screens.
+// @description (Requires Tampermonkey Legacy / MV2!) Auto-hide Overleaf top toolbar to maximise vertical space. Hover over that area to show it again. To optionally maximise horizontal space, you can optimise file tree/outline spacing and/or hide file outline to maximise horizontal space. Toggle with settings button in toolbar.
 // @homepageURL https://www.github.com/sjain882/Browser-Tweaks
 // @supportURL  https://www.github.com/sjain882/Browser-Tweaks/issues
 // @homepageURL https://www.github.com/sjain882/Browser-Tweaks/Userscripts
@@ -30,14 +30,6 @@
   var $jqueryOverleafUserScript = jQuery.noConflict();
   // $j is now an alias to the jQuery function; creating the new alias is optional.
 
-  // Load saved states or default to false
-  let hideFileOutlineFromStorage =
-    localStorage.getItem("ls_HIDE_FILE_OUTLINE") === "true";
-  let optimiseFileTreeSpacingFromStorage =
-    localStorage.getItem("ls_OPTIMISE_FILE_TREE_SPACING") === "true";
-  let fileTreeFontSizeFromStorage =
-    localStorage.getItem("ls_FILE_TREE_FONT_SIZE") === "true";
-
   var setIntervalFileTree;
 
   let gmc = new GM_config({
@@ -46,24 +38,37 @@
 
     // Fields object
     fields: {
+
       // This is the id of the field
       HIDE_FILE_OUTLINE: {
         label: "Hide File Outline", // Appears next to field
         type: "checkbox", // Makes this setting a checkbox
         default: true, // Default value if user doesn't change it
       },
-      // This is the id of the field
+
       OPTIMISE_FILE_TREE_SPACING: {
-        label: "Optimise File Tree Spacing", // Appears next to field
-        type: "checkbox", // Makes this setting a checkbox
-        default: true, // Default value if user doesn't change it
+        label: "Optimise File Tree Spacing", 
+        type: "checkbox", 
+        default: true, 
       },
-      // This is the id of the field
+
       FILE_TREE_FONT_SIZE: {
-        label: "File Tree Font Size", // Appears next to field
-        type: "text", // Makes this setting a text input
-        default: "8", // Default value if user doesn't change it
+        label: "File Tree Font Size", 
+        type: "text",
+        default: "8", 
       },
+
+      OPTIMISE_FILE_OUTLINE_SPACING: {
+        label: "Optimise File Outline Spacing", 
+        type: "checkbox", 
+        default: true, 
+      },
+
+      FILE_OUTLINE_FONT_SIZE: {
+        label: "File Outline Font Size", 
+        type: "text", 
+        default: "8", 
+      }
     },
 
     events: {
@@ -82,8 +87,17 @@
           "FILE_TREE_FONT_SIZE",
           localStorage.getItem("ls_FILE_TREE_FONT_SIZE") || "8"
         );
+        this.set(
+          "OPTIMISE_FILE_OUTLINE_SPACING",
+          localStorage.getItem("ls_OPTIMISE_FILE_OUTLINE_SPACING") === "true"
+        );
+        this.set(
+          "FILE_OUTLINE_FONT_SIZE",
+          localStorage.getItem("ls_FILE_OUTLINE_FONT_SIZE") || "8"
+        );
 
         optimiseFileTree();
+        optimiseFileOutline();
         hideFileOutline();
         // gmc.open();
       },
@@ -100,8 +114,17 @@
           "ls_FILE_TREE_FONT_SIZE",
           gmc.get("FILE_TREE_FONT_SIZE")
         );
+        localStorage.setItem(
+          "ls_OPTIMISE_FILE_OUTLINE_SPACING",
+          gmc.get("OPTIMISE_FILE_OUTLINE_SPACING")
+        );
+        localStorage.setItem(
+          "ls_FILE_OUTLINE_FONT_SIZE",
+          gmc.get("FILE_OUTLINE_FONT_SIZE")
+        );
         optimiseFileTree();
         hideFileOutline();
+        optimiseFileOutline();
         window.location.reload();
       },
     },
@@ -214,6 +237,16 @@
 
         .item-name-button {
           padding-right: 0 !important;
+        }
+      `);
+    }
+  }
+
+  function optimiseFileOutline() {
+    if (gmc.get("OPTIMISE_FILE_OUTLINE_SPACING")) {
+      GM_addStyle(`
+        .outline-pane {
+          font-size: ${gmc.get("FILE_OUTLINE_FONT_SIZE")}pt !important;
         }
       `);
     }
