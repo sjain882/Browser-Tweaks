@@ -4,7 +4,7 @@
 // @author      sjain882 / shanie
 // @match       *://weather.metoffice.gov.uk/maps-and-charts/*
 // @grant       GM_addStyle
-// @version     0.1.0
+// @version     0.1.1
 // @icon        https://www.google.com/s2/favicons?sz=64&domain=metoffice.gov.uk
 // @description Makes the date + time sliders taller on all met office weather maps, and stops the green box + arrow from blocking drag events. Especially useful on mobile.
 // @homepageURL https://www.github.com/sjain882/Browser-Tweaks/Userscripts

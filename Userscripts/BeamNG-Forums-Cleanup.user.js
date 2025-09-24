@@ -2,8 +2,8 @@
 // @name        BeamNG Forums Cleanup
 // @namespace   https://www.github.com/sjain882
 // @author      sjain882 / shanie
-// @match       *://*.beamng.com/*
-// @match       *://beamng.com/*
+// @match       *://*.beamng.com/resources/*
+// @match       *://beamng.com/resources/*
 // @exclude     *://*.beamng.com/game*
 // @exclude     *://beamng.com/game*
 // @exclude     *://documentation.beamng.com*
