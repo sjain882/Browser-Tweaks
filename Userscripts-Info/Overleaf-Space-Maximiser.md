@@ -6,9 +6,10 @@
 
 **Compatible Site:** Any Overleaf project editor: `https://www.overleaf.com/project/*`
 
-#### ⚠ Warning
+#### ⚠️ Warning
 
-- This userscript requires an MV2 UserScript manager, such as [Tampermonkey Legacy](https://www.tampermonkey.net/)
+- If using Chromium, this userscript requires an MV2 UserScript manager, such as [Tampermonkey Legacy](https://www.tampermonkey.net/)
+- If using Firefox, any userscript manager will work fine.
 - Changing settings for this userscript will reload the page, so make sure your work is saved and you have a stable internet connection.
 
 #### 📌 What It Does
