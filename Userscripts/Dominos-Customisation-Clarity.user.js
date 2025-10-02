@@ -7,7 +7,7 @@
 // @match        *://*.dominos.co.uk/*
 // @match        *://dominos.co.uk/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=dominos.co.uk
-// @homepageURL  https://www.github.com/sjain882/Browser-Tweaks/Userscripts
+// @homepageURL  https://github.com/sjain882/Browser-Tweaks/tree/main/Userscripts
 // @supportURL   https://www.github.com/sjain882/Browser-Tweaks/issues
 // @downloadURL  https://raw.githubusercontent.com/sjain882/Browser-Tweaks/main/Userscripts/Dominos-Customisation-Clarity.user.js
 // @updateURL    https://raw.githubusercontent.com/sjain882/Browser-Tweaks/main/Userscripts/Dominos-Customisation-Clarity.user.js
