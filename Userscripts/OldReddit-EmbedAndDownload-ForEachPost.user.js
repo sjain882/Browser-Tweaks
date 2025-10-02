@@ -22,7 +22,7 @@
     const toast = document.createElement("div");
     toast.textContent = "Copied!";
     toast.style.position = "fixed";
-    toast.style.left = x + "px";
+    toast.style.left = (x - 27) + "px";
     toast.style.top = (y - 30) + "px"; // above cursor
     toast.style.background = "rgba(0,0,0,0.8)";
     toast.style.color = "white";
