@@ -6,8 +6,6 @@
 // @version     0.4.2
 // @icon        https://www.google.com/s2/favicons?sz=64&domain=overleaf.com
 // @description (Requires Tampermonkey Legacy / MV2 on Chromium!) Auto-hide Overleaf top toolbar to maximise vertical space. Hover over that area to show it again. To optionally maximise horizontal space, you can optimise file tree/outline spacing and/or hide file outline to maximise horizontal space. Toggle with settings button in toolbar.
-// @homepageURL https://www.github.com/sjain882/Browser-Tweaks
-// @supportURL  https://www.github.com/sjain882/Browser-Tweaks/issues
 // @homepageURL https://www.github.com/sjain882/Browser-Tweaks/Userscripts
 // @supportURL  https://www.github.com/sjain882/Browser-Tweaks/issues
 // @downloadURL https://raw.githubusercontent.com/sjain882/Browser-Tweaks/main/Userscripts/Overleaf-Space-Maximiser.user.js
