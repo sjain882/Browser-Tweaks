@@ -1,10 +1,10 @@
 ﻿// ==UserScript==
 // @name         Old Reddit - Add Embed, Download and Undelete buttons to all posts
 // @namespace    https://github.com/sjain882
-// @author       TheoriticalZero
+// @author       Ritinkar (Yesterday for Old Reddit)
 // @author       sjain882 / shanie
 // @version      0.1.0
-// @description  Adds vxreddit, rxddit, rapidsave, reveddit shortcuts to each post on old.reddit.com. Thanks to TheoriticalZero for base userscript - modified by sjain882 to add some QoL features.
+// @description  Adds vxreddit, rxddit, rapidsave, reveddit shortcuts to each post on old.reddit.com. Thanks to Ritinkar (Yesterday for Old Reddit) for base userscript - modified by sjain882 to add some QoL features.
 // @match        https://old.reddit.com/*
 // @icon         https://www.redditstatic.com/desktop2x/img/favicon/favicon-32x32.png
 // @homepageURL  https://github.com/sjain882/Browser-Tweaks/tree/main/Userscripts
